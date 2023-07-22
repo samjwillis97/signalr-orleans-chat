@@ -6,6 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"start": "serve build/",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
@@ -36,6 +37,7 @@
 	"type": "module",
 	"dependencies": {
 		"@melt-ui/svelte": "0.22.0",
-		"@microsoft/signalr": "^7.0.9"
+		"@microsoft/signalr": "^7.0.9",
+		"serve": "^14.2.0"
 	}
 }
