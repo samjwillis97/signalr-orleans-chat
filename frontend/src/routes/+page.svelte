@@ -48,7 +48,7 @@
 					state = 'waitingForName';
 				}
 				if (state === 'waitingForName') {
-          name = '';
+					name = '';
 				}
 		}
 	}
