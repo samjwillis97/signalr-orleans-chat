@@ -2,7 +2,7 @@
 	import { connection } from '$lib/services/signalr';
 	import type { ChatMessage } from '$lib/models/chat';
 	import { createEventDispatcher } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import ChatBubble from './ChatBubble.svelte';
 
 	export let messages: ChatMessage[] = [];
 	export let clientId: string = '';
@@ -12,7 +12,6 @@
 	let elemChat: HTMLElement;
 
 	let message = '';
-	let hoveredMessageIndex: number | undefined = undefined;
 	let stoppedTypingSetTimeout: NodeJS.Timeout | undefined = undefined;
 
 	async function handleMessageKeyDown() {
@@ -61,66 +60,19 @@
 		dispatch('leftRoom');
 		message = '';
 	}
-
-	function messageHoverStart(index: number) {
-		hoveredMessageIndex = index;
-	}
-
-	function messageHoverEnd() {
-		const currentNumber = hoveredMessageIndex;
-		setTimeout(() => {
-			if (hoveredMessageIndex === currentNumber) {
-				hoveredMessageIndex = undefined;
-			}
-		}, 550);
-	}
 </script>
 
-<!-- svelte-ignore a11y-autofocus -->
 <div bind:this={elemChat} class="h-96 border rounded-md py-1 px-0.5 overflow-y-scroll">
 	<div class="h-full" />
 	<div class="flex flex-col gap-1.5 w-full justify-end">
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		{#each messages as message, index}
-			{#if message.clientId === clientId}
-				<div class="flex flex-row w-full justify-end items-center">
-					{#if index === hoveredMessageIndex}
-						<div transition:fade class="pr-2 text-xs text-slate-400 text-muted-foreground">
-							{message.time.toLocaleTimeString()}
-						</div>
-					{/if}
-					<div
-						class="border bg-orange-400 text-orange-100 rounded-lg px-3 py-2 rounded-br-sm text-sm font-medium leading-none justify-self-end"
-						on:mouseenter={() => messageHoverStart(index)}
-						on:mouseleave={() => messageHoverEnd()}
-					>
-						{message.message}
-					</div>
-				</div>
-			{:else}
-				<div class="flex flex-row w-full justify-start items-center">
-					<div
-						class="border rounded-lg px-3 py-2 rounded-bl-sm text-slate-800 justify-self-start text-sm font-medium leading-none justify-self-end"
-						on:mouseenter={() => messageHoverStart(index)}
-						on:mouseleave={() => messageHoverEnd()}
-					>
-						{message.message}
-					</div>
-					<div class="pl-2 font-light text-xs text-slate-400">
-						{message.name}
-					</div>
-					{#if index === hoveredMessageIndex}
-						<div transition:fade class="pl-2 font-light text-xs text-slate-400">
-							{message.time.toLocaleTimeString()}
-						</div>
-					{/if}
-				</div>
-			{/if}
+		{#each messages as message}
+			<ChatBubble bind:message bind:clientId />
 		{/each}
 	</div>
 </div>
 <div class="flex flex-col w-full gap-2.5">
 	<div class="flex flex-row w-full mt-4">
+		<!-- svelte-ignore a11y-autofocus -->
 		<input
 			autofocus
 			type="text"
