@@ -2,7 +2,11 @@ import { env } from '$env/dynamic/public';
 import * as signalR from '@microsoft/signalr';
 
 export const connection = new signalR.HubConnectionBuilder()
-	.withUrl(env.RAILWAY_SERVICE_orleans_URL + '/myhub' ?? 'http://localhost:5000/myhub')
+	.withUrl(
+		env.RAILWAY_SERVICE_orleans_URL
+			? env.RAILWAY_SERVICE_orleans_URL + '/myhub'
+			: 'http://localhost:5000/myhub'
+	)
 	.configureLogging(signalR.LogLevel.Information)
 	.build();
 
