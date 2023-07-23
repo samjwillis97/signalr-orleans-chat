@@ -5,6 +5,7 @@
 	import RoomTitle from '$lib/components/RoomTitle.svelte';
 	import TypingBanner from '$lib/components/TypingBanner.svelte';
 	import { connection, start } from '$lib/services/signalr';
+	import { document } from 'postcss';
 
 	let socketId = '';
 	let name = '';
@@ -40,6 +41,18 @@
 		state = 'inChatRoom';
 	}
 
+	function handleKeyUp(event: KeyboardEvent) {
+		switch (event.key) {
+			case 'Escape':
+				if (state === 'waitingForRoom') {
+					state = 'waitingForName';
+				}
+				if (state === 'waitingForName') {
+          name = '';
+				}
+		}
+	}
+
 	function handleMessageSent(clientId: string, name: string, message: string, date: string) {
 		if (clientId === socketId) return;
 		const parsedDate = new Date(date);
@@ -54,6 +67,8 @@
 		currentUserCount = currentCount;
 	}
 </script>
+
+<svelte:window on:keyup={handleKeyUp} />
 
 <div class="flex flex-col items-center justify-between h-screen">
 	<div class="mt-5">
