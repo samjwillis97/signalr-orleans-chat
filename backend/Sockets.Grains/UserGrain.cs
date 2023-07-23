@@ -46,9 +46,10 @@ namespace Sockets.Grains
             await roomGrain.SendMessage(this.GetPrimaryKeyString(), message, time);
         }
 
-        public async ValueTask SetName(string name)
+        public ValueTask SetName(string name)
         {
             _name = name;
+            return ValueTask.CompletedTask;
         }
 
         public async ValueTask StartTyping()

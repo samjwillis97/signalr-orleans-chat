@@ -86,8 +86,8 @@ namespace Sockets.Grains
         private async ValueTask EmitTypingUsers() {
             var typingUserNames = new List<string>();
             foreach (var user in _typingUsers) {
-                var ok = _userMap.TryGetValue(user, out var name);
-                if (!ok) throw new Exception("Typing user does not exist");
+                _userMap.TryGetValue(user, out var name);
+                if (name == null) throw new Exception("Typing user does not exist");
                 typingUserNames.Add(name);
             }
 
