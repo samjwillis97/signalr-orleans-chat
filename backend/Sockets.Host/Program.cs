@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyHeader();
             policy.AllowCredentials();
-            var hostingOrigin = Environment.GetEnvironmentVariable("RAILWAY_SERVICE_FRONTEND_URL");
+            var hostingOrigin = Environment.GetEnvironmentVariable("RAILWAY_SERVICE_frontend_URL");
             if (hostingOrigin != null)
             {
                 policy.WithOrigins(hostingOrigin);
