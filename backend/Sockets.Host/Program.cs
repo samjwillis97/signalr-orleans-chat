@@ -21,7 +21,7 @@ builder.WebHost.ConfigureKestrel(configure =>
     var portEnvValue = Environment.GetEnvironmentVariable("PORT");
     if (!string.IsNullOrEmpty(portEnvValue))
     {
-        configure.Listen(System.Net.IPAddress.Loopback, int.Parse(portEnvValue));
+        configure.Listen(System.Net.IPAddress.Any, int.Parse(portEnvValue));
     }
 });
 
