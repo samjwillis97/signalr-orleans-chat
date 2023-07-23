@@ -16,9 +16,11 @@ builder.Host.UseOrleans(siloBuilder =>
     siloBuilder.RegisterHub<MyHub>(); // Required for each hub type if the backplane ability #1 is being used.
 });
 
-builder.WebHost.ConfigureKestrel(configure => {
+builder.WebHost.ConfigureKestrel(configure =>
+{
     var portEnvValue = Environment.GetEnvironmentVariable("PORT");
-    if (!string.IsNullOrEmpty(portEnvValue)) {
+    if (!string.IsNullOrEmpty(portEnvValue))
+    {
         configure.Listen(System.Net.IPAddress.Loopback, int.Parse(portEnvValue));
     }
 });
@@ -29,18 +31,21 @@ builder.Services
 
 builder.Services.AddCors(options =>
 {
-	options.AddPolicy(name: "AllowAllCors",
+    options.AddPolicy(name: "AllowAllCors",
         policy =>
-	    {
+        {
             policy.AllowAnyHeader();
             policy.AllowCredentials();
-            var hostingOrigin = Environment.GetEnvironmentVariable("RAILWAY_SERVICE_frontend_URL");
-            if (hostingOrigin != null) {
+            var hostingOrigin = Environment.GetEnvironmentVariable("RAILWAY_SERVICE_FRONTEND_URL");
+            if (hostingOrigin != null)
+            {
                 policy.WithOrigins(hostingOrigin);
-            } else {
+            }
+            else
+            {
                 policy.WithOrigins("http://localhost:5173");
             }
-	    });
+        });
 });
 
 var app = builder.Build();
