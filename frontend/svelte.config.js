@@ -14,7 +14,11 @@ const config = {
       fallback: undefined,
       precompress: false,
       strict: true
-    })
+    }),
+    env: {
+      publicPrefix: "",
+      privatePrefix: "PRIVATE_"
+    }
   },
   preprocess: sequence([
     // ... other preprocessors

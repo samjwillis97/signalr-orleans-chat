@@ -1,4 +1,4 @@
-import { env } from '$env/dynamic/private';
+import { env } from '$env/dynamic/public';
 import * as signalR from '@microsoft/signalr';
 
 export const connection = new signalR.HubConnectionBuilder()
