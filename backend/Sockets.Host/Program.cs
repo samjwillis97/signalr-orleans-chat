@@ -39,7 +39,7 @@ builder.Services.AddCors(options =>
             var hostingOrigin = Environment.GetEnvironmentVariable("RAILWAY_SERVICE_FRONTEND_URL");
             if (hostingOrigin != null)
             {
-                policy.WithOrigins(hostingOrigin);
+                policy.WithOrigins("https://" + hostingOrigin);
             }
             else
             {
